@@ -6,7 +6,7 @@ local frame_delay = 0
 local info_msg = "Type the number of seconds you want to record! You will have 2 seconds to close the formspec before records starts! Recording can generate many data (up to ten-twelve images per second) so be careful and lower the resolution.\n --- azekill_DIABLO\nPS: Ask me if you know how to do a scrollable multiline label! Thank you!"
 
 local rec_mt = function(timer, fps)
-	if fps ~= "" and fps > "0" then
+	if tonumber(timer) and tonumber(fps) and fps ~= "" and fps > "0" then
 		local framerate = 1/fps
 		minetest.after(2, function()
 			time_zero=0-timer
