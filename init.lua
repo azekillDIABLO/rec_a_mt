@@ -3,7 +3,7 @@ local modstorage = core.get_mod_storage()
 local time_zero = 1
 local frame_delay = 0
 
-local info_msg = "Type the number of seconds you want to record! You will have 2 seconds to close the formspec before records starts! Recording can generate many data (up to ten-twelve images per second) so be careful and lower the resolution.\n --- azekill_DIABLO\nPS: Ask me if you know how to do a scrollable multiline label! Thank you!"
+local info_msg = "Type the number of seconds you want to record! You will have 2 seconds before records starts! Recording can generate many data (up to ten-twelve images per second) so be careful and lower the resolution.\n --- azekill_DIABLO\nPS: Ask me if you know how to do a scrollable multiline label! Thank you!"
 
 local rec_mt = function(timer, fps)
 	if tonumber(timer) and tonumber(fps) and fps ~= "" and fps > "0" and timer > "0" then
@@ -38,7 +38,7 @@ local rec_form = function()
 		"textarea[0.4,1;5.065,1.5;rec_info;What to do?;".. info_msg .."]" ..
 		"field[0.4,3.1;2.4,1;rec_timer;Timing in seconds:;5]" ..
 		"field[3.08,3.1;2.4,1;rec_fps;Framerate:;10]" ..
-		"button[0.1,3.5;2.43,1;rec_btn;Start]" ..
+		"button_exit[0.1,3.5;2.43,1;rec_btn;Start]" ..
 		"button[2.8,3.5;2.41,1;stop_btn;Stop]"
 	)
 end
