@@ -23,7 +23,7 @@ local rec_mt = function(timer, fps)
 				end
 			end)
 		end)
-	else minetest.display_chat_message("Invalid Framerate!")
+	else minetest.display_chat_message("Framerate or the Timing in seconds is invalid!")
 	end
 end
 
