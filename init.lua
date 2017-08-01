@@ -38,7 +38,7 @@ local rec_form = function()
 		"textarea[0.4,1;5.065,1.5;rec_info;What to do?;".. info_msg .."]" ..
 		"field[0.4,3.1;2.4,1;rec_timer;Timing in seconds:;5]" ..
 		"field[3.08,3.1;2.4,1;rec_fps;Framerate:;10]" ..
-		"button[0.1,3.5;2.43,1;rec_btn;Start]" ..
+		"button_exit[0.1,3.5;2.43,1;rec_btn;Start]" ..
 		"button[2.8,3.5;2.41,1;stop_btn;Stop]"
 	)
 end
