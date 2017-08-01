@@ -6,22 +6,25 @@ local frame_delay = 0
 local info_msg = "Type the number of seconds you want to record! You will have 2 seconds to close the formspec before records starts! Recording can generate many data (up to ten-twelve images per second) so be careful and lower the resolution.\n --- azekill_DIABLO\nPS: Ask me if you know how to do a scrollable multiline label! Thank you!"
 
 local rec_mt = function(timer, fps)
-	local framerate = 1/fps
-	minetest.after(2, function()
-		time_zero=0-timer
-		minetest.register_globalstep(function(dtime)
-			if time_zero >= 0 then
-				return nil
-			else
-				time_zero=time_zero+dtime
-				frame_delay=frame_delay+dtime
-				if frame_delay > framerate then
-					minetest.take_screenshot()
-					frame_delay=0
+	if fps ~= "" and fps > "0" then
+		local framerate = 1/fps
+		minetest.after(2, function()
+			time_zero=0-timer
+			minetest.register_globalstep(function(dtime)
+				if time_zero >= 0 then
+					return nil
+				else
+					time_zero=time_zero+dtime
+					frame_delay=frame_delay+dtime
+					if frame_delay > framerate then
+						minetest.take_screenshot()
+						frame_delay=0
+					end
 				end
-			end
+			end)
 		end)
-	end)
+	else minetest.display_chat_message("Invalid Framerate!")
+	end
 end
 
 local rec_form = function()
