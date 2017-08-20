@@ -33,7 +33,7 @@ local rec_mt = function(timer, fps)
 					else
 						time_zero=time_zero+dtime
 						frame_delay=frame_delay+dtime
-						if frame_delay > framerate then
+						if frame_delay >= framerate then
 							minetest.take_screenshot()
 							frame_delay=0
 						end
