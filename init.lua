@@ -2,6 +2,7 @@ local modname = core.get_current_modname() or "??"
 local modstorage = core.get_mod_storage()
 local time_zero = 1
 local frame_delay = 0
+local globalstep = false
 
 local rec_form = function()
 	minetest.show_formspec("record", 
@@ -24,18 +25,21 @@ local rec_mt = function(timer, fps)
 		local framerate = 1/fps
 		minetest.after(2, function()
 			time_zero=0-timer
-			minetest.register_globalstep(function(dtime)
-				if time_zero >= 0 then
-					return nil
-				else
-					time_zero=time_zero+dtime
-					frame_delay=frame_delay+dtime
-					if frame_delay > framerate then
-						minetest.take_screenshot()
-						frame_delay=0
+			if globalstep == false then
+				globalstep = true
+				minetest.register_globalstep(function(dtime)
+					if time_zero >= 0 then
+						return nil
+					else
+						time_zero=time_zero+dtime
+						frame_delay=frame_delay+dtime
+						if frame_delay > framerate then
+							minetest.take_screenshot()
+							frame_delay=0
+						end
 					end
-				end
-			end)
+				end)
+			end
 		end)
 	else minetest.display_chat_message("Framerate or the Timing in seconds is invalid!")
 		minetest.after(0.1, function()
