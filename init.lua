@@ -5,6 +5,8 @@ local frame_delay = 0
 local globalstep = false
 local framerate = 1
 
+local info_msg = "What to do?,,Type the number of seconds you want to record!,You will have 2 seconds before records starts!,Recording can generate many data,up to ten-twelve images per second,so be careful and lower the resolution.,,--- azekill_DIABLO"
+
 local rec_form = function()
 	minetest.show_formspec("record", 
 		"size[5,4]" ..
@@ -13,7 +15,7 @@ local rec_form = function()
 		"button_exit[4.2,-0.15;1,0.7;close;×]" ..
 		"label[0.6,0;Minetest Recording GUI:]" ..
 		"vertlabel[-0.2,0.4;PARAMETERS]" ..
-		"textlist[0.4,1;5,1.5;rec_info;What to do?,Type the number of seconds you want to record!,You will have 2 seconds before records starts!,Recording can generate many data,up to ten-twelve images per second,so be careful and lower the resolution.,--- azekill_DIABLO]" ..
+		"textlist[0.4,1;5,1.5;rec_info;"..info_msg.."]" ..
 		"field[0.4,3.1;2.4,1;rec_timer;Timing in seconds:;5]" ..
 		"field[3.08,3.1;2.4,1;rec_fps;Framerate:;10]" ..
 		"button_exit[0.1,3.5;2.43,1;rec_btn;Start]" ..
