@@ -2,6 +2,10 @@ local modname = core.get_current_modname() or "??"
 local modstorage = core.get_mod_storage()
 local time_zero = 1
 local frame_delay = 0
+local globalstep = false
+local framerate = 1
+
+local info_msg = "What to do?,,Type the number of seconds you want to record!,You will have 2 seconds before records starts!,Recording can generate many data,up to ten-twelve images per second,so be careful and lower the resolution.,,--- azekill_DIABLO"
 
 local rec_form = function()
 	minetest.show_formspec("record", 
@@ -11,7 +15,7 @@ local rec_form = function()
 		"button_exit[4.2,-0.15;1,0.7;close;×]" ..
 		"label[0.6,0;Minetest Recording GUI:]" ..
 		"vertlabel[-0.2,0.4;PARAMETERS]" ..
-		"textlist[0.4,1;5,1.5;rec_info;What to do?,Type the number of seconds you want to record!,You will have 2 seconds before records starts!,Recording can generate many data,up to ten-twelve images per second,so be careful and lower the resolution.,--- azekill_DIABLO]" ..
+		"textlist[0.4,1;5,1.5;rec_info;"..info_msg.."]" ..
 		"field[0.4,3.1;2.4,1;rec_timer;Timing in seconds:;5]" ..
 		"field[3.08,3.1;2.4,1;rec_fps;Framerate:;10]" ..
 		"button_exit[0.1,3.5;2.43,1;rec_btn;Start]" ..
@@ -21,21 +25,24 @@ end
 
 local rec_mt = function(timer, fps)
 	if tonumber(timer) and tonumber(fps) and fps ~= "" and fps > "0" and timer > "0" then
-		local framerate = 1/fps
+		framerate = 1/fps
 		minetest.after(2, function()
 			time_zero=0-timer
-			minetest.register_globalstep(function(dtime)
-				if time_zero >= 0 then
-					return nil
-				else
-					time_zero=time_zero+dtime
-					frame_delay=frame_delay+dtime
-					if frame_delay > framerate then
-						minetest.take_screenshot()
-						frame_delay=0
+			if globalstep == false then
+				globalstep = true
+				minetest.register_globalstep(function(dtime)
+					if time_zero >= 0 then
+						return nil
+					else
+						time_zero=time_zero+dtime
+						frame_delay=frame_delay+dtime
+						if frame_delay >= framerate then
+							minetest.take_screenshot()
+							frame_delay=0
+						end
 					end
-				end
-			end)
+				end)
+			end
 		end)
 	else minetest.display_chat_message("Framerate or the Timing in seconds is invalid!")
 		minetest.after(0.1, function()
