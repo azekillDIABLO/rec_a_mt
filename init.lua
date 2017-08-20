@@ -3,6 +3,7 @@ local modstorage = core.get_mod_storage()
 local time_zero = 1
 local frame_delay = 0
 local globalstep = false
+local framerate = 1
 
 local rec_form = function()
 	minetest.show_formspec("record", 
@@ -22,7 +23,7 @@ end
 
 local rec_mt = function(timer, fps)
 	if tonumber(timer) and tonumber(fps) and fps ~= "" and fps > "0" and timer > "0" then
-		local framerate = 1/fps
+		framerate = 1/fps
 		minetest.after(2, function()
 			time_zero=0-timer
 			if globalstep == false then
